@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useTheme } from '../hooks/useTheme';
 import ThemeToggle from '../components/ThemeToggle';
-
+import { API_URL } from '../config';
 const colors = ['#7c3aed', '#ec4899', '#06b6d4', '#f97316', '#22c55e', '#eab308'];
 
 function Dashboard() {
@@ -17,20 +17,20 @@ function Dashboard() {
   }, []);
 
   const fetchEntries = async () => {
-    const response = await axios.get(`http://localhost:5000/diary/${user.id}`);
+    const response = await axios.get(`${API_URL}/diary/${user.id}`);
     setEntries(response.data);
   };
 
   const addEntry = async (e) => {
     e.preventDefault();
-    await axios.post('http://localhost:5000/diary/create', { userId: user.id, title, content });
+    await axios.post(`${API_URL}/diary/create`, { userId: user.id, title, content });
     setTitle('');
     setContent('');
     fetchEntries();
   };
 
   const deleteEntry = async (id) => {
-    await axios.delete(`http://localhost:5000/diary/${id}`);
+    await axios.delete(`${API_URL}/diary/${id}`);
     fetchEntries();
   };
 
